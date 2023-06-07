@@ -102,17 +102,14 @@ class Role(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        try:
-            print(config.ready.message)
-            await self.r.select(1)
-            stroptions = await self.r.get(name=config.data_base.data["Game"].key)
-            option = await async_loads(stroptions)
-            self.bot.add_view(RoleView(option=option))
-            stroptions = await self.r.get(name=config.data_base.data["Love"].key)
-            option = await async_loads(stroptions)
-            self.bot.add_view(LoveRoleView(option=option))
-        except:
-            pass
+        print(config.ready.message)
+        await self.r.select(1)
+        stroptions = await self.r.get(name=config.data_base.data["Game"].key)
+        option = await async_loads(stroptions)
+        self.bot.add_view(RoleView(option=option))
+        stroptions = await self.r.get(name=config.data_base.data["Love"].key)
+        option = await async_loads(stroptions)
+        self.bot.add_view(LoveRoleView(option=option))
 
     async def cog_load(self) -> None:
         print(f"{self.__class__.__name__} loaded")
@@ -120,11 +117,11 @@ class Role(commands.Cog):
     @commands.command(name=config.command.game.command_name)
     async def game_roles(self, ctx: commands.Context):
         roles = ctx.message.content.split(" ")[1:]
-        options = [discord.SelectOption(label=ctx.guild.get_role(role_id=int(role.replace(
+        options = [discord.SelectOption(label=discord.utils.get(ctx.guild.roles, id=int(role.replace(
             '<@&', '').replace('>', ''))).name, value=role.replace('<@&', '').replace('>', ''), emoji=emojis[role.replace('<@&', '').replace('>', '')]) for role in roles]
         view = RoleView(option=options)
         options = await async_dumps(obj=options)
-        await self.r.set(name=config.data_base.data["Game"].key, value=options)
+        await self.r.set(name=config.data_base.data["Game"].key)
         await ctx.send(view=view)
 
     @commands.command(name=config.command.love.command_name)
