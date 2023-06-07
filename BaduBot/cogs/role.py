@@ -124,7 +124,7 @@ class Role(commands.Cog):
             '<@&', '').replace('>', ''))).name, value=role.replace('<@&', '').replace('>', ''), emoji=emojis[role.replace('<@&', '').replace('>', '')]) for role in roles]
         view = RoleView(option=options)
         options = await async_dumps(obj=options)
-        await self.r.set(name=config.data_base.data["Game"].key)
+        await self.r.set(name=config.data_base.data["Game"].key, value=options)
         await ctx.send(view=view)
 
     @commands.command(name=config.command.love.command_name)
