@@ -32,8 +32,12 @@ class LoveRoleSelect(Select):
     def __init__(self, option):
         options = option
         love = config.select.select_options["Love"]
-        super().__init__(placeholder=love.placeholder, custom_id=love.custom_id,
-                         options=options, max_values=len(options) if option else 1)
+        super().__init__(
+            placeholder=love.placeholder,
+            custom_id=love.custom_id,
+            options=options,
+            max_values=len(options) if option else 1,
+        )
 
     async def callback(self, interaction: discord.Interaction) -> None:
         love_give = config.select.select_callback["Love-Give"]
@@ -43,15 +47,17 @@ class LoveRoleSelect(Select):
             if obj in self.values:
                 await interaction.user.remove_roles(obj)
                 try:
-                    await interaction.response.send_message(content=love_delete.message,
-                                                            ephemeral=love_delete.ephemeral)
+                    await interaction.response.send_message(
+                        content=love_delete.message, ephemeral=love_delete.ephemeral
+                    )
                 except:
                     pass
             else:
                 await interaction.user.add_roles(obj)
                 try:
-                    await interaction.response.send_message(content=love_give.message,
-                                                            ephemeral=love_give.ephemeral)
+                    await interaction.response.send_message(
+                        content=love_give.message, ephemeral=love_give.ephemeral
+                    )
                 except:
                     pass
 
@@ -69,8 +75,12 @@ class RoleSelect(Select):
     def __init__(self, option):
         options = option
         game = config.select.select_options["Game"]
-        super().__init__(placeholder=game.placeholder, custom_id=game.custom_id,
-                         options=options, max_values=len(options) if option else 1)
+        super().__init__(
+            placeholder=game.placeholder,
+            custom_id=game.custom_id,
+            options=options,
+            max_values=len(options) if option else 1,
+        )
 
     async def callback(self, interaction: discord.Interaction) -> None:
         game_give = config.select.select_callback["Game-Give"]
@@ -80,15 +90,17 @@ class RoleSelect(Select):
             if obj in interaction.user.roles:
                 await interaction.user.remove_roles(obj)
                 try:
-                    await interaction.response.send_message(content=game_delete.message,
-                                                            ephemeral=game_delete.ephemeral)
+                    await interaction.response.send_message(
+                        content=game_delete.message, ephemeral=game_delete.ephemeral
+                    )
                 except:
                     pass
             else:
                 await interaction.user.add_roles(obj)
                 try:
-                    await interaction.response.send_message(content=game_give.message,
-                                                            ephemeral=game_give.ephemeral)
+                    await interaction.response.send_message(
+                        content=game_give.message, ephemeral=game_give.ephemeral
+                    )
                 except:
                     pass
             options = self.options
@@ -120,21 +132,38 @@ class Role(commands.Cog):
     @commands.command(name=config.command.game.command_name)
     async def game_roles(self, ctx: commands.Context):
         roles = ctx.message.content.split(" ")[1:]
-        options = [discord.SelectOption(label=discord.utils.get(ctx.guild.roles, id=int(role.replace(
-            '<@&', '').replace('>', ''))).name, value=role.replace('<@&', '').replace('>', ''), emoji=emojis[role.replace('<@&', '').replace('>', '')]) for role in roles]
+        options = [
+            discord.SelectOption(
+                label=discord.utils.get(
+                    ctx.guild.roles, id=int(role.replace("<@&", "").replace(">", ""))
+                ).name,
+                value=role.replace("<@&", "").replace(">", ""),
+                emoji=emojis[role.replace("<@&", "").replace(">", "")],
+            )
+            for role in roles
+        ]
         view = RoleView(option=options)
         options = await async_dumps(obj=options)
-        await self.r.set(name=config.data_base.data["Game"].key,value=options)
+        await self.r.set(name=config.data_base.data["Game"].key, value=options)
         await ctx.send(view=view)
 
     @commands.command(name=config.command.love.command_name)
     async def love_roles(self, ctx: commands.Context):
-        roles = ctx.message.content.split(" ")[:1]
-        options = [discord.SelectOption(label=discord.utils.get(ctx.guild.roles, id=int(role.replace(
-            '<@&', '').replace('>', ''))).name, value=role.replace('<@&', '').replace('>', ''), emoji=emojis[role.replace('<@&', '').replace('>', '')]) for role in roles]
+        roles = ctx.message.content.split(" ")[1:]
+        print(roles)
+        options = [
+            discord.SelectOption(
+                label=discord.utils.get(
+                    ctx.guild.roles, id=int(role.replace("<@&", "").replace(">", ""))
+                ).name,
+                value=role.replace("<@&", "").replace(">", ""),
+                emoji=emojis[role.replace("<@&", "").replace(">", "")],
+            )
+            for role in roles
+        ]
         view = LoveRoleView(option=options)
         options = await async_dumps(obj=options)
-        await self.r.set(name=config.data_base.data["Love"].key)
+        await self.r.set(name=config.data_base.data["Love"].key, value=options)
         await ctx.send(view=view)
 
 
