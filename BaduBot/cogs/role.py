@@ -102,14 +102,17 @@ class Role(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(config.ready.message)
-        await self.r.select(1)
-        stroptions = await self.r.get(name=config.data_base.data["Game"].key)
-        option = await async_loads(stroptions)
-        self.bot.add_view(RoleView(option=option))
-        stroptions = await self.r.get(name=config.data_base.data["Love"].key)
-        option = await async_loads(stroptions)
-        self.bot.add_view(LoveRoleView(option=option))
+        try:
+            print(config.ready.message)
+            await self.r.select(1)
+            stroptions = await self.r.get(name=config.data_base.data["Game"].key)
+            option = await async_loads(stroptions)
+            self.bot.add_view(RoleView(option=option))
+            stroptions = await self.r.get(name=config.data_base.data["Love"].key)
+            option = await async_loads(stroptions)
+            self.bot.add_view(LoveRoleView(option=option))
+        except:
+            pass
 
     async def cog_load(self) -> None:
         print(f"{self.__class__.__name__} loaded")
@@ -121,7 +124,7 @@ class Role(commands.Cog):
             '<@&', '').replace('>', ''))).name, value=role.replace('<@&', '').replace('>', ''), emoji=emojis[role.replace('<@&', '').replace('>', '')]) for role in roles]
         view = RoleView(option=options)
         options = await async_dumps(obj=options)
-        await self.r.set(name=config.data_base.data["Game"].key)
+        await self.r.set(name=config.data_base.data["Game"].key,value=options)
         await ctx.send(view=view)
 
     @commands.command(name=config.command.love.command_name)
