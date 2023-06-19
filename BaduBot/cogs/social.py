@@ -72,7 +72,7 @@ class Social(BaseCog):
         await self.bot.wait_until_ready()
 
     @commands.hybrid_command(
-        name=command.insta.command_name, aliases=command.insta.aliases
+        name=command.insta.command_name, aliases=command.insta.aliases,help=command.insta.description
     )
     async def insta(self, ctx: commands.Context):
         await ctx.send(embed=self.embed_create(media=accounts.Instagram))

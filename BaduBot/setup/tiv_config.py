@@ -24,6 +24,7 @@ class ActivityConfig:
 class Command:
     command_name: str
     aliases: list[str] = field(default_factory=list)
+    description: str = field(default_factory=str)
 
 
 @dataclass
@@ -295,7 +296,8 @@ CONFIG = Config(
         allowed_hours=[10, 22],
         command=SocialCommands(
             insta=Command(
-                command_name="insta", aliases=["instagram", "Insta", "Instagram"]
+                command_name="insta", aliases=["instagram", "Insta", "Instagram"],
+                description="Kullanıldığı kanala Instagram Hesap Bağlantısını Yollar"
             ),
             youtube=Command(command_name="youtube", aliases=["yt", "YouTube", "Youtube"]),
             twitch=Command(command_name="twitch", aliases=["tw", "Twitch"]),
@@ -307,4 +309,5 @@ CONFIG = Config(
             footer_text="Yukarıdaki linkten {} hesabına ulaşabilirsiniz. Takip Etmeyi Unutmayın!"
         )
     ),
+
 )
