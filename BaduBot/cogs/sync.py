@@ -13,7 +13,7 @@ class Sync(commands.Cog):
     async def cog_load(self) -> None:
         print(f"{self.__class__.__name__} Loaded Don't Forget Sync")
 
-    @commands.command(name="sync")
+    @commands.command(name="sync-test")
     @commands.is_owner()
     async def sync(self, ctx: commands.Context):
         """Sync all commands (Admin Command)"""
@@ -21,7 +21,7 @@ class Sync(commands.Cog):
         await ctx.send("Synced", ephemeral=True)
         await bot.tree.sync()
 
-    @commands.command(name="emergency")
+    @commands.command(name="emergency-test")
     @commands.is_owner()
     async def emergency(self, ctx:commands.Context):
         """Emergency Stop"""

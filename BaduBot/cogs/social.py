@@ -32,9 +32,7 @@ class Social(BaseCog):
             title=media.name,
             description=media.link,
             url=media.link,
-            timestamp=datetime.datetime.now(
-                tz=config.time_zone
-            ),
+            timestamp=datetime.datetime.now(tz=config.time_zone),
         )
         embed.set_thumbnail(url=media.logo)
         embed.set_footer(
@@ -72,25 +70,33 @@ class Social(BaseCog):
         await self.bot.wait_until_ready()
 
     @commands.hybrid_command(
-        name=command.insta.command_name, aliases=command.insta.aliases,help=command.insta.description
+        name=command.insta.command_name,
+        aliases=command.insta.aliases,
+        help=command.insta.description,
     )
     async def insta(self, ctx: commands.Context):
         await ctx.send(embed=self.embed_create(media=accounts.Instagram))
 
     @commands.hybrid_command(
-        name=command.youtube.command_name, aliases=command.youtube.aliases
+        name=command.youtube.command_name,
+        aliases=command.youtube.aliases,
+        help=command.youtube.description,
     )
     async def youtube(self, ctx: commands.Context):
         await ctx.send(embed=self.embed_create(media=accounts.YouTube))
 
     @commands.hybrid_command(
-        name=command.twitch.command_name, aliases=command.twitch.aliases
+        name=command.twitch.command_name, 
+        aliases=command.twitch.aliases,
+        help=command.twitch.description
     )
     async def twitch(self, ctx: commands.Context):
         await ctx.send(embed=self.embed_create(media=accounts.Twitch))
 
     @commands.hybrid_command(
-        name=command.reddit.command_name, aliases=command.reddit.aliases
+        name=command.reddit.command_name, 
+        aliases=command.reddit.aliases,
+        help=command.reddit.description
     )
     async def reddit(self, ctx: commands.Context):
         await ctx.send(embed=self.embed_create(media=accounts.Reddit))

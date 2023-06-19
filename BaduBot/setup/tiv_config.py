@@ -122,11 +122,11 @@ class RoleConfig:
     ready: ReadyConfig
     command: RoleCommands
 
+
 @dataclass
 class EmbedConfig:
     color: int
     footer_text: str
-
 
 
 @dataclass
@@ -295,19 +295,33 @@ CONFIG = Config(
         time_zone=timezone(timedelta(hours=3)),
         allowed_hours=[10, 22],
         command=SocialCommands(
+            # The "command_name" parameter represents the command name used to invoke the selected social media account when called.
+            # It also specifies the name displayed for the slash command.
+            # The "aliases" parameter specifies alternative command names for prefix commands.
             insta=Command(
-                command_name="insta", aliases=["instagram", "Insta", "Instagram"],
-                description="Kullanıldığı kanala Instagram Hesap Bağlantısını Yollar"
+                command_name="insta",
+                aliases=["instagram", "Insta", "Instagram"],
+                description="Kullanıldığı Kanala Instagram Hesap Bağlantısını Yollar",
             ),
-            youtube=Command(command_name="youtube", aliases=["yt", "YouTube", "Youtube"]),
-            twitch=Command(command_name="twitch", aliases=["tw", "Twitch"]),
-            reddit=Command(command_name="reddit"),
+            youtube=Command(
+                command_name="youtube",
+                aliases=["yt", "YouTube", "Youtube"],
+                description="Kullanıldığı Kanala YouTube Hesap Bağlantısını Yollar",
+            ),
+            twitch=Command(
+                command_name="twitch",
+                aliases=["tw", "Twitch"],
+                description="Kullanıldığı Kanala Twitch Hesap Bağlantısını Yollar",
+            ),
+            reddit=Command(
+                command_name="reddit",
+                description="Kullanıldığı Kanala Reddit Hesap Bağlantısını Yollar",
+            ),
         ),
         embed=EmbedConfig(
             color=0xFF0000,
             # {} this is your media name. Footer_text is media announcement message
-            footer_text="Yukarıdaki linkten {} hesabına ulaşabilirsiniz. Takip Etmeyi Unutmayın!"
-        )
+            footer_text="Yukarıdaki linkten {} hesabına ulaşabilirsiniz. Takip Etmeyi Unutmayın!",
+        ),
     ),
-
 )
