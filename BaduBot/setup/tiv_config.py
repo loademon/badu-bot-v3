@@ -1,6 +1,7 @@
 from discord.ext import commands, tasks
 from discord import ActivityType, PartialEmoji
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from datetime import timezone, timedelta
 
 
 class BaseCog(commands.Cog):
@@ -22,12 +23,21 @@ class ActivityConfig:
 @dataclass
 class Command:
     command_name: str
+    aliases: list[str] = field(default_factory=list)
 
 
 @dataclass
 class RoleCommands:
     game: Command
     love: Command
+
+
+@dataclass
+class SocialCommands:
+    insta: Command
+    youtube: Command
+    twitch: Command
+    reddit: Command
 
 
 @dataclass
@@ -111,11 +121,44 @@ class RoleConfig:
     ready: ReadyConfig
     command: RoleCommands
 
+@dataclass
+class EmbedConfig:
+    color: int
+    footer_text: str
+
+
+
+@dataclass
+class SocialAccount:
+    name: str
+    logo: str
+    link: str
+
+
+@dataclass
+class AccountsConfig:
+    Instagram: SocialAccount
+    Twitch: SocialAccount
+    YouTube: SocialAccount
+    Reddit: SocialAccount
+
+
+@dataclass
+class SocialConfig:
+    logo: str
+    accounts: AccountsConfig
+    channel_id: int
+    time_zone: timezone
+    allowed_hours: list[int]
+    command: SocialCommands
+    embed: EmbedConfig
+
 
 @dataclass
 class Config:
     main: MainConfig
     role: RoleConfig
+    social: SocialConfig
 
 
 CONFIG = Config(
@@ -218,5 +261,50 @@ CONFIG = Config(
             game=Command(command_name="game-role-select"),
             love=Command(command_name="love-role-select"),
         ),
+    ),
+    social=SocialConfig(
+        # The logo/icon that will be displayed in the author section of embed messages.
+        logo="https://raw.githubusercontent.com/loademon/bot-utils/main/Badubot_logo.png",
+        accounts=AccountsConfig(
+            Instagram=SocialAccount(
+                name="Instagram",
+                logo="https://raw.githubusercontent.com/loademon/bot-utils/main/Instagram_logo.png",
+                link="https://www.instagram.com/batuhansygili/",
+            ),
+            Twitch=SocialAccount(
+                name="Twitch",
+                logo="https://raw.githubusercontent.com/loademon/bot-utils/main/Twitch_logo.png",
+                link="https://www.twitch.tv/badu_tv",
+            ),
+            YouTube=SocialAccount(
+                name="YouTube",
+                logo="https://raw.githubusercontent.com/loademon/bot-utils/main/Youtube_logo.png",
+                link="https://www.youtube.com/@batuhansygili",
+            ),
+            Reddit=SocialAccount(
+                name="Reddit",
+                logo="https://raw.githubusercontent.com/loademon/bot-utils/main/Reddit_logo.png",
+                link="https://www.reddit.com/r/BaduveSipahileri/",
+            ),
+        ),
+        # The ID of the message channel where social links will be posted at intervals.
+        channel_id=1116432483538440268,
+        # Timezone your country
+        # Ex: Change the hours to 3 for UTC+3
+        time_zone=timezone(timedelta(hours=3)),
+        allowed_hours=[10, 22],
+        command=SocialCommands(
+            insta=Command(
+                command_name="insta", aliases=["instagram", "Insta", "Instagram"]
+            ),
+            youtube=Command(command_name="youtube", aliases=["yt", "YouTube", "Youtube"]),
+            twitch=Command(command_name="twitch", aliases=["tw", "Twitch"]),
+            reddit=Command(command_name="reddit"),
+        ),
+        embed=EmbedConfig(
+            color=0xFF0000,
+            # {} this is your media name. Footer_text is media announcement message
+            footer_text="Yukarıdaki linkten {} hesabına ulaşabilirsiniz. Takip Etmeyi Unutmayın!"
+        )
     ),
 )

@@ -21,7 +21,7 @@ class BaduBot(commands.Bot):
     ) -> None:
         if e.__class__ == commands.CommandNotFound:
             error = config.error.CommandNotFound
-            await context.send(error.message, delete_after=error.delete_after)
+            await context.send(f"**{context.message.content.split()[0]}** {error.message}", delete_after=error.delete_after)
 
         if e.__class__ == commands.NotOwner:
             error = config.error.NotOwner
