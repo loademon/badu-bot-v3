@@ -175,7 +175,6 @@ class LiveEmbedConfig:
     time_zone: timezone
 
 
-
 @dataclass
 class TwitchAuth:
     client_id: str
@@ -193,11 +192,22 @@ class LiveConfig:
 
 
 @dataclass
+class WelcomeConfig:
+    logo: str
+    guild_id: int
+    channel_id: int
+    join_message: str
+    footer_message: str
+    color: int
+
+
+@dataclass
 class Config:
     main: MainConfig
     role: RoleConfig
     social: SocialConfig
     live: LiveConfig
+    welcome: WelcomeConfig
 
 
 CONFIG = Config(
@@ -364,7 +374,7 @@ CONFIG = Config(
     ),
     live=LiveConfig(
         embed=LiveEmbedConfig(
-            color=0xff0000,
+            color=0xFF0000,
             game_field="Oyun",
             viewer_field="İzleyici Sayısı",
             channel_name="BADU_TV",
@@ -380,22 +390,34 @@ CONFIG = Config(
             twitch_url="https://twitch.tv/BADU_TV",
             thumbnail="https://raw.githubusercontent.com/loademon/bot-utils/main/yayin_basliyor.png",
             youtube="https://www.youtube.com/@batuhansygili",
-            time_zone=timezone(timedelta(hours=3))
+            time_zone=timezone(timedelta(hours=3)),
         ),
         notification_channel_id=1116432483538440268,
-        live_presence=ActivityConfig(
-            type=ActivityType.streaming,
-            message="Badu_TV"
-        ),
+        live_presence=ActivityConfig(type=ActivityType.streaming, message="Badu_TV"),
         not_live_presence=ActivityConfig(
-            type= ActivityType.watching,
-            message="Badu'nun geçmiş yayınını"
+            type=ActivityType.watching, message="Badu'nun geçmiş yayınını"
         ),
         auth=TwitchAuth(
             client_id="zcsriby5sboppd3eimnwlof3j88hho",
             client_secret="y7t8l0a42fkbqyiduzccqhkttsu32q",
-            channel_id="45968413"
-        )
-
+            channel_id="181504421",
+        ),
+    ),
+    welcome=WelcomeConfig(
+        # The image that will be displayed on the right side of the embed. (Thumbnail)
+        logo="https://raw.githubusercontent.com/loademon/bot-utils/main/Badu_logo.png",
+        # The ID of the guild where user join will be tracked.
+        guild_id=1116432482343080007    ,
+        # The ID of the channel where the welcome message will be sent after the user joins the server.
+        channel_id=1116432482972205083,
+        # The content of the welcome message. After this message, the user will be mentioned.
+        # Ex, if you enter "Welcome to our community"
+        # the message will appear as "Welcome to our community @xxx".
+        join_message="Aramıza Hoşgeldin",
+        # This message will also appear in the footer.
+        # Suggested usage: 'I hope you never leave.'
+        footer_message="Umarım Hiç Ayrılmazsın",
+        # Embed color
+        color=0xFF0000,
     ),
 )
