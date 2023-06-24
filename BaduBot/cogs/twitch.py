@@ -14,16 +14,17 @@ class Live(BaseCog):
     def __init__(self, bot: commands.Bot) -> None:
         super().__init__(bot)
         self.token = None
-        self.notification = None
+        self.notification = False
         self.notification_channel = None
         self.presence = "Not Live"
+        self.live_check.start()
 
     @commands.Cog.listener()
     async def on_ready(self):
+        self.notification_channel = self.bot.get_channel(config.notification_channel_id)
         print(f"{__class__.__name__} Ready")
 
     async def cog_load(self) -> None:
-        self.notification_channel = self.bot.get_channel(config.notification_channel_id)
         print(f"{__class__.__name__} loaded")
 
     async def get_token(self, auth: TwitchAuth) -> str:
