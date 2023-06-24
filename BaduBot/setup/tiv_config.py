@@ -156,10 +156,48 @@ class SocialConfig:
 
 
 @dataclass
+class LiveEmbedConfig:
+    color: int
+    game_field: str
+    viewer_field: str
+    channel_name: str  # Your Twitch Channel Name
+    title: str  # Live notification embed title
+    go_to_live: str  # Go to live button title
+    message: str  # Live notification content Ex: @everyone xxx Live!
+    end_title: str  # The title of the message to be sent after the broadcast is ended.
+    end_got_to_live: str  # Go to live history button title
+    end_message: str  # Live Ending notification content Ex: xxx's Live Closed
+    go_to_youtube: str  # Go to youtube button title
+    logo: str
+    twitch_url: str
+    thumbnail: str
+    youtube: str
+    time_zone: timezone
+
+
+
+@dataclass
+class TwitchAuth:
+    client_id: str
+    client_secret: str
+    channel_id: str
+
+
+@dataclass
+class LiveConfig:
+    embed: LiveEmbedConfig
+    notification_channel_id: int
+    live_presence: ActivityConfig  # Bot status message
+    not_live_presence: ActivityConfig  # Bot status message
+    auth: TwitchAuth
+
+
+@dataclass
 class Config:
     main: MainConfig
     role: RoleConfig
     social: SocialConfig
+    live: LiveConfig
 
 
 CONFIG = Config(
@@ -323,5 +361,41 @@ CONFIG = Config(
             # {} this is your media name. Footer_text is media announcement message
             footer_text="Yukarıdaki linkten {} hesabına ulaşabilirsiniz. Takip Etmeyi Unutmayın!",
         ),
+    ),
+    live=LiveConfig(
+        embed=LiveEmbedConfig(
+            color=0xff0000,
+            game_field="Oyun",
+            viewer_field="İzleyici Sayısı",
+            channel_name="BADU_TV",
+            # Live Notification embed title
+            title="BADU_TV Yayında!",
+            go_to_live="Yayına Git",
+            message="@everyone Yayın Başladı **Kop Gel**",
+            end_title="Her Güzel Şeyin Sonu",
+            end_message="Evet, yayının kapanmasını biz de istemezdik ama arada olur böyle şeyler.\nBadu'nun yayın açmasını beklerken ben geçmiş yayınları izliyor olacağım.\n\n**Sen de aşağıdaki butonlardan bana katılabilir veya Youtube'da takılabilirsin!**",
+            end_got_to_live="Yayın Geçmişine Git",
+            go_to_youtube="Youtube'a Git",
+            logo="https://raw.githubusercontent.com/loademon/bot-utils/main/Badu_logo.png",
+            twitch_url="https://twitch.tv/BADU_TV",
+            thumbnail="https://raw.githubusercontent.com/loademon/bot-utils/main/yayin_basliyor.png",
+            youtube="https://www.youtube.com/@batuhansygili",
+            time_zone=timezone(timedelta(hours=3))
+        ),
+        notification_channel_id=1116432483538440268,
+        live_presence=ActivityConfig(
+            type=ActivityType.streaming,
+            message="Badu_TV"
+        ),
+        not_live_presence=ActivityConfig(
+            type= ActivityType.watching,
+            message="Badu'nun geçmiş yayınını"
+        ),
+        auth=TwitchAuth(
+            client_id="zcsriby5sboppd3eimnwlof3j88hho",
+            client_secret="y7t8l0a42fkbqyiduzccqhkttsu32q",
+            channel_id="45968413"
+        )
+
     ),
 )

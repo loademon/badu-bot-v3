@@ -2,6 +2,7 @@
 
 from discord.ext import commands
 
+
 class Sync(commands.Cog):
     def __init__(self, bot: commands.Bot) -> None:
         self.bot = bot
@@ -23,10 +24,10 @@ class Sync(commands.Cog):
 
     @commands.command(name="emergency-test")
     @commands.is_owner()
-    async def emergency(self, ctx:commands.Context):
+    async def emergency(self, ctx: commands.Context):
         """Emergency Stop"""
         exit()
 
 
-async def setup(bot:commands.Bot):
+async def setup(bot: commands.Bot):
     await bot.add_cog(Sync(bot=bot))

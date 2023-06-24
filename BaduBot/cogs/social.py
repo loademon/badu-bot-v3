@@ -50,6 +50,7 @@ class Social(BaseCog):
 
     @tasks.loop(time=datetimes)
     async def social_loop(self):
+        self.loops.append(self.social_loop)
         current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
         current_time = datetime.datetime.now().strftime("%H:%M")
         if current_datetime not in self.loop_done_datetimes:
@@ -86,17 +87,17 @@ class Social(BaseCog):
         await ctx.send(embed=self.embed_create(media=accounts.YouTube))
 
     @commands.hybrid_command(
-        name=command.twitch.command_name, 
+        name=command.twitch.command_name,
         aliases=command.twitch.aliases,
-        help=command.twitch.description
+        help=command.twitch.description,
     )
     async def twitch(self, ctx: commands.Context):
         await ctx.send(embed=self.embed_create(media=accounts.Twitch))
 
     @commands.hybrid_command(
-        name=command.reddit.command_name, 
+        name=command.reddit.command_name,
         aliases=command.reddit.aliases,
-        help=command.reddit.description
+        help=command.reddit.description,
     )
     async def reddit(self, ctx: commands.Context):
         await ctx.send(embed=self.embed_create(media=accounts.Reddit))
