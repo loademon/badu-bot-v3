@@ -138,7 +138,7 @@ class Live(BaseCog):
             )
             await self.notification_channel.send(embed=embed, view=view)
 
-        if live is True and self.presence is "Not Live":
+        if live is True and self.presence == "Not Live":
             await self.bot.change_presence(
                 activity=discord.Streaming(
                     name=config.live_presence.message, url=config.embed.twitch_url
@@ -146,7 +146,7 @@ class Live(BaseCog):
             )
             self.presence = "Live"
 
-        if live == False and self.presence == "Live":
+        if live is False and self.presence == "Live":
             activity = discord.Activity(
                 type=config.not_live_presence.type,
                 name=config.not_live_presence.message,
