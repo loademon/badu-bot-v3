@@ -1,31 +1,38 @@
-from discord import TextChannel
-from discord.ext import commands, tasks
-from tiv_config import BaseCog
+# from pyyoutube import Api
+
+# uploads_id = "UUE3V90t9Ako4rRZH9Qe9gfg"
+# api = Api(api_key="AIzaSyCkMdzfuTd8P3csmaOZnCqfdHRVHQH7Rdo")
+
+# while True:
+#     playlist = api.get_playlist_items(
+#             playlist_id=uploads_id,
+#             count=1,
+#         )
+
+#     print(playlist.items[0].snippet.resourceId.videoId)
+#     video = api.get_video_by_id(video_id=f"{playlist.items[0].snippet.resourceId.videoId}")
+#     print(video.items[0].snippet)
 
 
-class Test(BaseCog):
-    def __init__(self, bot: commands.Bot) -> None:
-        super().__init__(bot)
-        self.inte = 0
-        self.channel_id = 1093500895091757087
-        self.test_loop.start()
-    
+import requests
+import json
 
-    @tasks.loop(seconds=2)
-    async def test_loop(self):
-        self.loops.append(self.test_loop)
-        channel = TextChannel = self.bot.get_channel(self.channel_id)
-        await channel.send(f"Test {self.inte}")
-        self.inte += 1
+def send_discord_message(webhook_url, message):
+    data = {
+        "content": message
+    }
+    headers = {
+        "Content-Type": "application/json"
+    }
+    response = requests.post(webhook_url, data=json.dumps(data), headers=headers)
+    if response.status_code != 204:
+        print("Mesaj gönderilemedi. Hata kodu:", response.status_code)
+    else:
+        print("Mesaj başarıyla gönderildi.")
 
-    @test_loop.before_loop
-    async def before_insta_loop(self):
-        await self.bot.wait_until_ready()
+# Webhook URL'sini ve göndermek istediğiniz mesajı belirtin
+webhook_url = "https://discord.com/api/webhooks/1122491924599803944/2G3EDXXIarwoNyoKkrkf8DGhFRqrZKN5GI_sg_zblN_5U1es4qJDQk9Ac98z_qqtsqmi"
+message = "Merhaba, bu bir Discord webhook testidir."
 
-    @commands.command(name="restart")
-    async def restarts(self,ctx):
-        await self.bot.unload_extension("cogs.test")
-
-
-async def setup(bot:commands.Bot):
-    await bot.add_cog(Test(bot=bot))
+# Discord'a mesaj gönderme işlemi
+send_discord_message(webhook_url, message)

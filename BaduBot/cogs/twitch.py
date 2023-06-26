@@ -1,13 +1,13 @@
-import discord
-import aiohttp
 import asyncio
 import datetime
+
+import aiohttp
+import discord
 from discord.ext import commands, tasks
 from discord.ui import View, Button
-from tiv_config import CONFIG, BaseCog, TwitchAuth
 
-
-config = CONFIG.live
+from tivtech.Base import BaseCog
+from tivtech.LiveConfig import CONFIG as config, TwitchAuth
 
 
 class Live(BaseCog):
@@ -113,7 +113,7 @@ class Live(BaseCog):
                 color=0xFF0000,
                 title=config.embed.end_title,
                 description=config.embed.end_message,
-                timestamp=datetime.datetime.now(tz=config.embed.time_zone)
+                timestamp=datetime.datetime.now(tz=config.embed.time_zone),
             )
             embed.set_image(url=config.embed.logo)
             embed.set_author(

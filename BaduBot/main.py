@@ -1,8 +1,6 @@
 from discord import Activity, Intents
-from tiv_config import CONFIG
+from tivtech.MainConfig import CONFIG as config
 from discord.ext import commands
-
-config = CONFIG.main
 
 
 class BaduBot(commands.Bot):
@@ -21,7 +19,10 @@ class BaduBot(commands.Bot):
     ) -> None:
         if e.__class__ == commands.CommandNotFound:
             error = config.error.CommandNotFound
-            await context.send(f"**{context.message.content.split()[0]}** {error.message}", delete_after=error.delete_after)
+            await context.send(
+                f"**{context.message.content.split()[0]}** {error.message}",
+                delete_after=error.delete_after,
+            )
 
         if e.__class__ == commands.NotOwner:
             error = config.error.NotOwner

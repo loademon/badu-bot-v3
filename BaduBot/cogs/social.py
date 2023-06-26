@@ -1,13 +1,10 @@
-import discord
-from discord.ext import commands, tasks
-from discord.ext import commands
-from tiv_config import CONFIG, BaseCog, SocialAccount
 import datetime
 
-config = CONFIG.social
+import discord
+from discord.ext import commands, tasks
 
-
-intents = discord.Intents.all()
+from tivtech.Base import BaseCog
+from tivtech.SocialConfig import CONFIG as config, SocialAccount
 
 timezone = config.time_zone
 allowed_hours = config.allowed_hours

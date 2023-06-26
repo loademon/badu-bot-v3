@@ -176,6 +176,15 @@ class LiveEmbedConfig:
 
 
 @dataclass
+class YoutubeEmbedConfig:
+    color: int
+    viewer_field: str
+    title: str
+    time_zone: timezone
+    go_to_video: str
+
+
+@dataclass
 class TwitchAuth:
     client_id: str
     client_secret: str
@@ -202,12 +211,23 @@ class WelcomeConfig:
 
 
 @dataclass
+class YoutubeConfig:
+    logo: str
+    channel_id: int
+    uploads_id: str
+    api_key: str
+    embed: YoutubeEmbedConfig
+    data: DataBaseConfig
+
+
+@dataclass
 class Config:
     main: MainConfig
     role: RoleConfig
     social: SocialConfig
     live: LiveConfig
     welcome: WelcomeConfig
+    youtube: YoutubeConfig
 
 
 CONFIG = Config(
@@ -407,7 +427,7 @@ CONFIG = Config(
         # The image that will be displayed on the right side of the embed. (Thumbnail)
         logo="https://raw.githubusercontent.com/loademon/bot-utils/main/Badu_logo.png",
         # The ID of the guild where user join will be tracked.
-        guild_id=1116432482343080007    ,
+        guild_id=1116432482343080007,
         # The ID of the channel where the welcome message will be sent after the user joins the server.
         channel_id=1116432482972205083,
         # The content of the welcome message. After this message, the user will be mentioned.
@@ -419,5 +439,22 @@ CONFIG = Config(
         footer_message="Umarım Hiç Ayrılmazsın",
         # Embed color
         color=0xFF0000,
+    ),
+    youtube=YoutubeConfig(
+        logo="https://raw.githubusercontent.com/loademon/bot-utils/main/Badu_logo.png",
+        channel_id=1116432482972205083,
+        uploads_id="UUE3V90t9Ako4rRZH9Qe9gfg",
+        api_key="AIzaSyCkMdzfuTd8P3csmaOZnCqfdHRVHQH7Rdo",
+        embed=YoutubeEmbedConfig(
+            color=0xFF0000,
+            viewer_field="İzlenme Sayısı",
+            title="Yeni Video Yayında!",
+            time_zone=timezone(timedelta(hours=3)),
+            go_to_video="Videoya Git",
+        ),
+        data=DataBaseConfig(
+            from_url="redis://localhost",
+            data={"Youtube": DataConfig(key="YoutubeLastNotification")},
+        ),
     ),
 )

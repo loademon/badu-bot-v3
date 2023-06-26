@@ -1,14 +1,15 @@
-import pickle
 import asyncio
+import pickle
 from typing import Any
-from tiv_config import CONFIG
 
 import discord
 from discord.ext import commands
 from discord.ui import View, Select
 import redis.asyncio as redis
 
-config = CONFIG.role
+from tivtech.RoleConfig import CONFIG as config
+
+
 emojis = config.emojis
 
 
