@@ -3,6 +3,7 @@ from discord import ActivityType, PartialEmoji
 from dataclasses import dataclass, field
 from datetime import timezone, timedelta
 
+
 @dataclass
 class ActivityConfig:
     type: ActivityType
@@ -89,6 +90,7 @@ class SelectCallbackConfig:
 class SelectConfig:
     select_options: dict[str, SelectOptionsConfig]
     select_callback: dict[str, SelectCallbackConfig]
+
 
 
 @dataclass
@@ -202,8 +204,8 @@ class WelcomeConfig:
 @dataclass
 class YoutubeConfig:
     logo: str
-    channel_id: int
-    uploads_id: str
     api_key: str
-    embed: YoutubeEmbedConfig
-    data: DataBaseConfig
+    webhook_bot_name: str
+    webhook_url: str
+    new_video_msg: str
+    not_entry_msg: str

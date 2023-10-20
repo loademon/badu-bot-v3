@@ -117,7 +117,7 @@ class Role(commands.Cog):
     async def on_ready(self):
         try:
             print(config.ready.message)
-            await self.r.select(1)
+            await self.r.select(0)
             stroptions = await self.r.get(name=config.data_base.data["Game"].key)
             option = await async_loads(stroptions)
             self.bot.add_view(RoleView(option=option))
@@ -131,6 +131,7 @@ class Role(commands.Cog):
         print(f"{self.__class__.__name__} loaded")
 
     @commands.command(name=config.command.game.command_name)
+    @commands.is_owner()
     async def game_roles(self, ctx: commands.Context):
         roles = ctx.message.content.split(" ")[1:]
         options = [
@@ -149,6 +150,7 @@ class Role(commands.Cog):
         await ctx.send(view=view)
 
     @commands.command(name=config.command.love.command_name)
+    @commands.is_owner()
     async def love_roles(self, ctx: commands.Context):
         roles = ctx.message.content.split(" ")[1:]
         print(roles)

@@ -56,7 +56,9 @@ CONFIG = MainConfig(
             CogConfig(name="sync", is_active=True),
             CogConfig(name="twitch", is_active=True),
             CogConfig(name="welcome", is_active=True),
-            CogConfig(name="youtube", is_active=True),
+            CogConfig(name="word_game", is_active=True),
+            CogConfig(name="logger", is_active=True),
+            CogConfig(name="editor", is_active=True),
         ]
     ),
 )

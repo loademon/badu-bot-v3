@@ -1,4 +1,5 @@
-from discord import Activity, Intents
+from typing import Any
+from discord import Activity, Intents, Interaction
 from tivtech.MainConfig import CONFIG as config
 from discord.ext import commands
 
@@ -9,6 +10,7 @@ class BaduBot(commands.Bot):
             command_prefix=config.command_prefix,
             intents=Intents.all(),
             activity=Activity(type=config.activity.type, name=config.activity.message),
+            help_command=None,
         )
 
     async def on_ready(self) -> None:
